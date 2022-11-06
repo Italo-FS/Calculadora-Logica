@@ -1,7 +1,68 @@
-// const AND_TEMPLATE = /(?:true|false)\sv\s(?:true|false)/
+// let textBox = document.getElementById('message');
+document.addEventListener('keydown', (event) => {
+	console.log(`key=${event.key},code=${event.code}`);
+
+	if (event.key.length === 1 && ord(event.key)>64 && ord(event.key)<91) {
+		inserir(event.key)
+	}
+	else if (event.key.length === 1 && ord(event.key)>96 && ord(event.key)<123) {
+		inserir(chr(ord(event.key)-32))
+	}
+	else {
+		switch (event.key) {
+			case 'Enter':
+				calcular()
+				break
+			case 'Backspace':
+				backspace()
+				break
+			case '(':
+				inserir('(')
+				break
+			case ')':
+				inserir(')')
+				break
+			case '1':
+				inserir('[Verdadeiro]')
+				break
+			case '0':
+				inserir('[Falso]')
+				break
+			default:
+				console.log(`Tecla [key=${event.key},code=${event.code}] não configurada`)
+		}
+	}
+});
+
 function ord(char){
 	return char.charCodeAt(0)
 }
+
+function chr(code){
+	return String.fromCharCode(code)
+}
+
+// const addColumn = () => {
+//     [...document.querySelectorAll('#table tr')].forEach((row, i) => {
+//         const input = document.createElement("input")
+//         input.setAttribute('type', 'text')
+//         const cell = document.createElement(i ? "td" : "th")
+//         cell.appendChild(input)
+//         row.appendChild(cell)
+//     });
+//  }
+
+// function addColumn () {
+// 	header = "header"
+
+// 	document.querySelectorAll('#tabela_resultado tr').forEach((row, i) => {
+//         const cell = document.createElement(i ? "td" : "th")
+// 		cell.innerHTML = (i ? i : header)
+
+//         // cell.appendChild(input)
+//         row.appendChild(cell)
+//     })
+// }
 
 var addBinary = function(a, b) {
     var i = a.length - 1;
@@ -24,16 +85,8 @@ var addBinary = function(a, b) {
 };
 
 function inserir(str) {
-	// if (str === "1") value = "1"
-	// if (str === "0") value = "0"
-	// if (str === "∨") value = "∨"
-	// if (str === "∧") value = "∧"
-	// if (str === "→") value = "→"
-	// if (str === "↔") value = "↔"
-	// if (str === "∼") value = "∼"
 	expression = expression + str
 	atualizar_expressao()
-	// console.log(expression)
 }
 
 function limpar() {
@@ -47,10 +100,7 @@ function backspace() {
 }
 
 function calcular() {
-	// console.log("R: " + calcular_expressao(expression))
-	document.querySelector("#resultado").innerHTML = `${expression} = ${calcular_expressao(expression)}`
-
-	// contar_variaveis()
+	estruturar_tabela_resposta()
 	limpar()
 }
 
@@ -61,68 +111,102 @@ function contem_duplicados(array) {
 	return false;
 }
 
-function contar_variaveis() {
-	// teste = 
-	// aux = Object.keys(teste).map((key) => [obj[key]]);
-	teste = []
+function corrigir_expressao(texto) {
+	while (texto.match(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)/)) {
+		texto = texto.replace(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)/, "$1∧$2")
+	}
+	return texto
+}
 
-	for (let item of new Set(expression)) teste.push(item);
+function ordenar_variaveis(texto) {
+	let array = []
+	for (let item of new Set(texto.replace("[Verdadeiro]","1").replace("[Falso]","0"))) array.push(item);
 
-	teste = teste.filter(x => {
-		return ord(x)>64 && ord(x)<91		
-	}).sort()
+	return (
+		array.filter(x => {
+			return ord(x)>64 && ord(x)<91		
+		}).sort()
+	)
+}
 
-	console.log(teste)
-	let qtde_linhas = (2**teste.length)
+function estruturar_tabela_resposta() {
+	expression = corrigir_expressao(expression)
+	let variaveis = ordenar_variaveis(expression)
+	
+
+	let qtde_linhas = (2**variaveis.length)
 
 	document.querySelector("#resultado").innerHTML = ""
 
 	let table = document.createElement("table")
-	let thead = table.createTHead();
-	let row = thead.insertRow();
-	for (let colunas of teste) {
+
+	//Estruturação do cabeçalho da tabela
+	let thead = table.createTHead()
+	let row = thead.insertRow()
+	for (let coluna of variaveis) {
 		let th = document.createElement("th");
-		th.innerHTML = colunas
-		row.appendChild(th);
+		th.innerHTML = coluna
+		row.appendChild(th)
 	}
-	thead.appendChild(row);
-	let bin = "0".repeat(teste.length)
-	let tbody = table.createTBody();
+
+	let th = document.createElement("th");
+	th.innerHTML = expression
+	row.appendChild(th)
+
+	thead.appendChild(row)
+	let bin = "0".repeat(variaveis.length)
+
+	//Estruturação do corpo da tabela
+	let tbody = table.createTBody()
 	for (linha = 0; linha<qtde_linhas; linha++) {
-		let row = table.insertRow();	
-		for (let coluna in bin) {
+		let row = table.insertRow()
+		let valores = {} //Valores atribuídos as variáveis que serão testadas em cada linha da tabela
+		for (let i = 0; i<variaveis.length; i++) {
 			let td = document.createElement("td");
+			td.innerHTML = (bin[i] === '0') ? "V" : "F"
+			valores[variaveis[i]] = (bin[i] === '0') ? "1" : "0"
 
-			td.innerHTML = (bin[coluna] === '0') ? "V" : "F"
-
-			row.appendChild(td);
+			row.appendChild(td)
 		}
-		tbody.appendChild(row);
+
+		let td = document.createElement("td");
+		td.innerHTML = calcular_expressao(expression, valores) === '1' ? "Verdadeiro" : "Falso"
+		row.appendChild(td)
+
+		tbody.appendChild(row)
 		bin = addBinary(bin,"1")
 	}
 
-	table.appendChild(thead);
-	table.appendChild(tbody);
-	document.querySelector("#resultado").appendChild(table);
+	table.appendChild(thead)
+	table.appendChild(tbody)
+	table.classList.add('table')
+	table.id = "tabela_resultado"
+	document.querySelector("#resultado").appendChild(table)
 
-		// console.log(teste)
-	// console.log(teste.filter(n => n))
+		// console.log(variaveis)
+	// console.log(variaveis.filter(n => n))
 
-	// teste = new Set(expression.filter( (x) => { x==='A' }))
+	// variaveis = new Set(expression.filter( (x) => { x==='A' }))
 	// // for (var i = 0; i < expression.length; i++) {
 	// // 	console.log()
 	// // 	console.log(expression[i]);
 	// // }
 
-	// console.log(teste.size)
-	// console.log(teste)
+	// console.log(variaveis.size)
+	// console.log(variaveis)
 }
 
 function atualizar_expressao() {
 	document.querySelector("#expressao").innerHTML = expression
 }
 
-function calcular_expressao(result) {
+function calcular_expressao(str, obj) {
+	result = str.replace("[Verdadeiro]","1").replace("[Falso]","0")
+
+	for (let variable in obj) {
+		result = result.replace(variable, obj[variable])
+	}
+
 	while (result.match(/\(([^\(\)]*)\)/)) { //Teste do Parenteses
 		result = result.replace(/\(([^\(\)]*)\)/, (match, p) => {
 			return calcular_expressao(p)
