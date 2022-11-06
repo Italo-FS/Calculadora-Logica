@@ -189,42 +189,6 @@ function calcular_expressao(str, obj) {
 		result = result.replace(variable, obj[variable])
 	}
 
-	// while (result.match(/\(([^\(\)]*)\)/)) { //Teste do Parenteses
-	// 	result = result.replace(/\(([^\(\)]*)\)/, (match, p) => {
-	// 		return calcular_expressao(p)
-	// 	})
-	// }
-
-	// while (result.match(/∼(0|1)/)) { //Teste do 'NÃO p'
-	// 	result = result.replace(/∼(0|1)/, (match, p) => {
-	// 		return (p==='0') ? '1' : '0'
-	// 	})
-	// }
-	
-	// while (result.match(/(0|1)∧(0|1)/)) { //Teste do 'p E q'
-	// 	result = result.replace(/(0|1)∧(0|1)/, (match, p, q) => {
-	// 		return (p==='1' && q==='1') ? '1' : '0'
-	// 	})
-	// }
-
-	// while (result.match(/(0|1)∨(0|1)/)) { //Teste do 'p OU q'
-	// 	result = result.replace(/(0|1)∨(0|1)/, (match, p, q) => {
-	// 		return (p==='1' || q==='1') ? '1' : '0'
-	// 	})
-	// }
-
-	// while (result.match(/(0|1)→(0|1)/)) { //Teste do 'SE p ENTÃO q'
-	// 	result = result.replace(/(0|1)→(0|1)/, (match, p, q) => {
-	// 		return (p==='1' && q==='0') ? '0' : '1'
-	// 	})
-	// }
-
-	// while (result.match(/(0|1)↔(0|1)/)) { //Teste do 'p SE SOMENTE SE q'
-	// 	result = result.replace(/(0|1)↔(0|1)/, (match, p, q) => {
-	// 		return ((p==='1' && q==='1') || (p==='0' && q==='0')) ? '1' : '0'
-	// 	})
-	// }
-
 	result = result.replaceAll(/\(([^\(\)]*)\)/g, (match, p) => { //Teste do Parenteses
 		return calcular_expressao(p)
 	})
