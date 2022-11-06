@@ -1,3 +1,5 @@
+expression = ""
+
 // let textBox = document.getElementById('message');
 document.addEventListener('keydown', (event) => {
 	console.log(`key=${event.key},code=${event.code}`);
@@ -41,16 +43,6 @@ function ord(char){
 function chr(code){
 	return String.fromCharCode(code)
 }
-
-// const addColumn = () => {
-//     [...document.querySelectorAll('#table tr')].forEach((row, i) => {
-//         const input = document.createElement("input")
-//         input.setAttribute('type', 'text')
-//         const cell = document.createElement(i ? "td" : "th")
-//         cell.appendChild(input)
-//         row.appendChild(cell)
-//     });
-//  }
 
 // function addColumn () {
 // 	header = "header"
@@ -112,15 +104,16 @@ function contem_duplicados(array) {
 }
 
 function corrigir_expressao(texto) {
-	while (texto.match(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)/)) {
-		texto = texto.replace(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)/, "$1∧$2")
-	}
+	// while (texto.match(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1|\))(\(|[A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)/)) {
+	// 	texto = texto.replace(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)/, "$1∧$2")
+	// }
+	texto = texto.replaceAll(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1|\))([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1|\()/g, "$1∧$2")
 	return texto
 }
 
 function ordenar_variaveis(texto) {
 	let array = []
-	for (let item of new Set(texto.replace("[Verdadeiro]","1").replace("[Falso]","0"))) array.push(item);
+	for (let item of new Set(texto.replaceAll("[Verdadeiro]","1").replaceAll("[Falso]","0"))) array.push(item);
 
 	return (
 		array.filter(x => {
@@ -182,18 +175,6 @@ function estruturar_tabela_resposta() {
 	table.classList.add('table')
 	table.id = "tabela_resultado"
 	document.querySelector("#resultado").appendChild(table)
-
-		// console.log(variaveis)
-	// console.log(variaveis.filter(n => n))
-
-	// variaveis = new Set(expression.filter( (x) => { x==='A' }))
-	// // for (var i = 0; i < expression.length; i++) {
-	// // 	console.log()
-	// // 	console.log(expression[i]);
-	// // }
-
-	// console.log(variaveis.size)
-	// console.log(variaveis)
 }
 
 function atualizar_expressao() {
@@ -201,47 +182,72 @@ function atualizar_expressao() {
 }
 
 function calcular_expressao(str, obj) {
-	result = str.replace("[Verdadeiro]","1").replace("[Falso]","0")
+	result = str.replaceAll("[Verdadeiro]","1").replaceAll("[Falso]","0")
+	console.log(result)
 
 	for (let variable in obj) {
 		result = result.replace(variable, obj[variable])
 	}
 
-	while (result.match(/\(([^\(\)]*)\)/)) { //Teste do Parenteses
-		result = result.replace(/\(([^\(\)]*)\)/, (match, p) => {
-			return calcular_expressao(p)
-		})
-	}
+	// while (result.match(/\(([^\(\)]*)\)/)) { //Teste do Parenteses
+	// 	result = result.replace(/\(([^\(\)]*)\)/, (match, p) => {
+	// 		return calcular_expressao(p)
+	// 	})
+	// }
 
-	while (result.match(/∼(0|1)/)) { //Teste do 'NÃO p'
-		result = result.replace(/∼(0|1)/, (match, p) => {
-			return (p==='0') ? '1' : '0'
-		})
-	}
+	// while (result.match(/∼(0|1)/)) { //Teste do 'NÃO p'
+	// 	result = result.replace(/∼(0|1)/, (match, p) => {
+	// 		return (p==='0') ? '1' : '0'
+	// 	})
+	// }
 	
-	while (result.match(/(0|1)∧(0|1)/)) { //Teste do 'p E q'
-		result = result.replace(/(0|1)∧(0|1)/, (match, p, q) => {
-			return (p==='1' && q==='1') ? '1' : '0'
-		})
-	}
+	// while (result.match(/(0|1)∧(0|1)/)) { //Teste do 'p E q'
+	// 	result = result.replace(/(0|1)∧(0|1)/, (match, p, q) => {
+	// 		return (p==='1' && q==='1') ? '1' : '0'
+	// 	})
+	// }
 
-	while (result.match(/(0|1)∨(0|1)/)) { //Teste do 'p OU q'
-		result = result.replace(/(0|1)∨(0|1)/, (match, p, q) => {
-			return (p==='1' || q==='1') ? '1' : '0'
-		})
-	}
+	// while (result.match(/(0|1)∨(0|1)/)) { //Teste do 'p OU q'
+	// 	result = result.replace(/(0|1)∨(0|1)/, (match, p, q) => {
+	// 		return (p==='1' || q==='1') ? '1' : '0'
+	// 	})
+	// }
 
-	while (result.match(/(0|1)→(0|1)/)) { //Teste do 'SE p ENTÃO q'
-		result = result.replace(/(0|1)→(0|1)/, (match, p, q) => {
-			return (p==='1' && q==='0') ? '0' : '1'
-		})
-	}
+	// while (result.match(/(0|1)→(0|1)/)) { //Teste do 'SE p ENTÃO q'
+	// 	result = result.replace(/(0|1)→(0|1)/, (match, p, q) => {
+	// 		return (p==='1' && q==='0') ? '0' : '1'
+	// 	})
+	// }
 
-	while (result.match(/(0|1)↔(0|1)/)) { //Teste do 'p SE SOMENTE SE q'
-		result = result.replace(/(0|1)↔(0|1)/, (match, p, q) => {
-			return ((p==='1' && q==='1') || (p==='0' && q==='0')) ? '1' : '0'
-		})
-	}
+	// while (result.match(/(0|1)↔(0|1)/)) { //Teste do 'p SE SOMENTE SE q'
+	// 	result = result.replace(/(0|1)↔(0|1)/, (match, p, q) => {
+	// 		return ((p==='1' && q==='1') || (p==='0' && q==='0')) ? '1' : '0'
+	// 	})
+	// }
+
+	result = result.replaceAll(/\(([^\(\)]*)\)/g, (match, p) => { //Teste do Parenteses
+		return calcular_expressao(p)
+	})
+
+	result = result.replaceAll(/∼(0|1)/g, (match, p) => { //Teste do 'NÃO p'
+		return (p==='0') ? '1' : '0'
+	})
+	
+	result = result.replaceAll(/(0|1)∧(0|1)/g, (match, p, q) => { //Teste do 'p E q'
+		return (p==='1' && q==='1') ? '1' : '0'
+	})
+
+	result = result.replaceAll(/(0|1)∨(0|1)/g, (match, p, q) => { //Teste do 'p OU q'
+		return (p==='1' || q==='1') ? '1' : '0'
+	})
+
+	result = result.replaceAll(/(0|1)→(0|1)/g, (match, p, q) => { //Teste do 'SE p ENTÃO q'
+		return (p==='1' && q==='0') ? '0' : '1'
+	})
+
+	result = result.replaceAll(/(0|1)↔(0|1)/g, (match, p, q) => { //Teste do 'p SE SOMENTE SE q'
+		return ((p==='1' && q==='1') || (p==='0' && q==='0')) ? '1' : '0'
+	})
 
 	return result
 }
