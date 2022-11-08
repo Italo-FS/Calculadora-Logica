@@ -132,6 +132,7 @@ function inserir(str) {
 	if (is_variable(str) && is_variable(expression.slice(-1))) return
 	if (str === '(' && is_variable(expression.slice(-1))) return
 	if (str === ')' && ( expression.replace(/[^\(]/g, '').length <= expression.replace(/[^\)]/g, '').length )) return
+	if (str === ')' && expression.slice(-1) === "(") return
 
 	
 	expression = expression + str
@@ -223,69 +224,6 @@ function estruturar_resposta() {
 	}
 
 	estruturar_tabela_resposta(array_tabela_resultado, qtde_linhas_tabela)
-
-	// console.log(array_tabela_resultado)
-	
-
-
-
-
-
-
-
-
-
-
-	
-	return
-	
-
-	// document.querySelector("#resultado").innerHTML = ""
-
-	// let table = document.createElement("table")
-
-	// //Estruturação do cabeçalho da tabela
-	// let thead = table.createTHead()
-	// let row = thead.insertRow()
-	// for (let coluna of variaveis) {
-	// 	let th = document.createElement("th");
-	// 	th.innerHTML = coluna
-	// 	row.appendChild(th)
-	// }
-
-	// let th = document.createElement("th");
-	// th.innerHTML = expression
-	// row.appendChild(th)
-
-	// thead.appendChild(row)
-	// let bin = "0".repeat(variaveis.length)
-
-	// //Estruturação do corpo da tabela
-	// let tbody = table.createTBody()
-	// for (linha = 0; linha<qtde_linhas; linha++) {
-	// 	let row = table.insertRow()
-	// 	let valores = {} //Valores atribuídos as variáveis que serão testadas em cada linha da tabela
-	// 	for (let i = 0; i<variaveis.length; i++) {
-	// 		let td = document.createElement("td");
-	// 		td.innerHTML = (bin[i] === '0') ? "V" : "F"
-	// 		valores[variaveis[i]] = (bin[i] === '0') ? "1" : "0"
-
-	// 		row.appendChild(td)
-	// 	}
-
-	// 	let td = document.createElement("td");
-	// 	td.innerHTML = calcular_expressao(expression, valores) === '1' ? "Verdadeiro" : "Falso"
-	// 	row.appendChild(td)
-
-	// 	tbody.appendChild(row)
-	// 	bin = addBinary(bin,"1")
-	// }
-
-	// table.appendChild(thead)
-	// table.appendChild(tbody)
-	// table.classList.add('table')
-	// table.id = "tabela_resultado"
-	// document.querySelector("#resultado").appendChild(table)
 }
 
 function atualizar_expressao() {
@@ -295,35 +233,47 @@ function atualizar_expressao() {
 function calcular_expressao(str, obj, string_result="") {
 	result = str.replaceAll("[Verdadeiro]","1").replaceAll("[Falso]","0")	
 
-	result = result.replaceAll(/\(([^\(\)]*)\)/g, (match, p) => { //Teste do Parenteses
-		response = calcular_expressao(p, obj, string_result)
-		string_result = `${string_result}${response[1]}`
-		return response[0]
-	})
+	while (result.match(/\(([^\(\)]*)\)/g)) {
+		result = result.replaceAll(/\(([^\(\)]*)\)/g, (match, p) => { //Teste do Parenteses
+			response = calcular_expressao(p, obj, string_result)
+			string_result = `${string_result}${response[1]}`
+			return response[0]
+		})
+	}
 
 	for (let variable in obj) { //Troca variaveis por seus valores
 		result = result.replaceAll(variable, obj[variable])
 	}
 
-	result = result.replaceAll(/∼(0|1)/g, (match, p) => { //Teste do 'NÃO p'
-		return (p==='0') ? '1' : '0'
-	})
+	while (result.match(/∼(0|1)/g)) {
+		result = result.replaceAll(/∼(0|1)/g, (match, p) => { //Teste do 'NÃO p'
+			return (p==='0') ? '1' : '0'
+		})
+	}
 	
-	result = result.replaceAll(/(0|1)∧(0|1)/g, (match, p, q) => { //Teste do 'p E q'
-		return (p==='1' && q==='1') ? '1' : '0'
-	})
+	while (result.match(/(0|1)∧(0|1)/g)) {
+		result = result.replaceAll(/(0|1)∧(0|1)/g, (match, p, q) => { //Teste do 'p E q'
+			return (p==='1' && q==='1') ? '1' : '0'
+		})	
+	}
 
-	result = result.replaceAll(/(0|1)∨(0|1)/g, (match, p, q) => { //Teste do 'p OU q'
-		return (p==='1' || q==='1') ? '1' : '0'
-	})
+	while (result.match(/(0|1)∨(0|1)/g)) {
+		result = result.replaceAll(/(0|1)∨(0|1)/g, (match, p, q) => { //Teste do 'p OU q'
+			return (p==='1' || q==='1') ? '1' : '0'
+		})
+	}
 
-	result = result.replaceAll(/(0|1)→(0|1)/g, (match, p, q) => { //Teste do 'SE p ENTÃO q'
-		return (p==='1' && q==='0') ? '0' : '1'
-	})
+	while (result.match(/(0|1)→(0|1)/g)) {
+		result = result.replaceAll(/(0|1)→(0|1)/g, (match, p, q) => { //Teste do 'SE p ENTÃO q'
+			return (p==='1' && q==='0') ? '0' : '1'
+		})
+	}
 
-	result = result.replaceAll(/(0|1)↔(0|1)/g, (match, p, q) => { //Teste do 'p SE SOMENTE SE q'
-		return ((p==='1' && q==='1') || (p==='0' && q==='0')) ? '1' : '0'
-	})
+	while (result.match(/(0|1)↔(0|1)/g)) {
+		result = result.replaceAll(/(0|1)↔(0|1)/g, (match, p, q) => { //Teste do 'p SE SOMENTE SE q'
+			return ((p==='1' && q==='1') || (p==='0' && q==='0')) ? '1' : '0'
+		})
+	}
 
 	string_result = `${string_result}|${str}:${result}`	
 	return [result, string_result]
