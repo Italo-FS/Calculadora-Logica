@@ -1,4 +1,5 @@
-expression = ""
+var expression = ""
+let OPERATORS = ['∼','∧','⊻','∨','→','↔']
 
 document.addEventListener('keydown', (event) => {
 	// console.log(`key=${event.key},code=${event.code}`);
@@ -114,7 +115,25 @@ function addBinary(a, b) {
     return result;
 };
 
+function is_logical_operator(str) {
+	for (let element of OPERATORS) {
+		if (str == element) return true
+	}
+	return false
+}
+
+function is_variable(str) {
+	if (ord(str)>64 && ord(str)<91) return true
+	return false
+}
+
 function inserir(str) {
+	if (is_logical_operator(str) && is_logical_operator(expression.slice(-1))) return
+	if (is_variable(str) && is_variable(expression.slice(-1))) return
+	if (str === '(' && is_variable(expression.slice(-1))) return
+	if (str === ')' && ( expression.replace(/[^\(]/g, '').length <= expression.replace(/[^\)]/g, '').length )) return
+
+	
 	expression = expression + str
 	atualizar_expressao()
 }
@@ -154,7 +173,8 @@ function corrigir_expressao(texto) {
 	// while (texto.match(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1|\))(\(|[A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)/)) {
 	// 	texto = texto.replace(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1)/, "$1∧$2")
 	// }
-	texto = texto.replaceAll(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1|\))([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1|\()/g, "$1∧$2")
+	texto = `${texto}${(expression.replace(/[^\(]/g, '').length > expression.replace(/[^\)]/g, '').length) ? ')'.repeat(expression.replace(/[^\(]/g, '').length - expression.replace(/[^\)]/g, '').length) : ''}`
+	texto = texto.replaceAll(/([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1|\))([A-Z]|\[Verdadeiro\]|\[Falso\]|0|1|∼|\()/g, "$1∧$2")
 	return texto
 }
 
@@ -273,7 +293,7 @@ function atualizar_expressao() {
 }
 
 function calcular_expressao(str, obj, string_result="") {
-	result = str.replaceAll("[Verdadeiro]","1").replaceAll("[Falso]","0")
+	result = str.replaceAll("[Verdadeiro]","1").replaceAll("[Falso]","0")	
 
 	result = result.replaceAll(/\(([^\(\)]*)\)/g, (match, p) => { //Teste do Parenteses
 		response = calcular_expressao(p, obj, string_result)
@@ -305,7 +325,7 @@ function calcular_expressao(str, obj, string_result="") {
 		return ((p==='1' && q==='1') || (p==='0' && q==='0')) ? '1' : '0'
 	})
 
-	string_result = `${string_result}|${str}:${result}`
+	string_result = `${string_result}|${str}:${result}`	
 	return [result, string_result]
 }
 
