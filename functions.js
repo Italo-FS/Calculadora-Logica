@@ -128,8 +128,13 @@ function is_variable(str) {
 }
 
 function inserir(str) {
-	if (is_logical_operator(str) && is_logical_operator(expression.slice(-1))) return
-	if (is_variable(str) && is_variable(expression.slice(-1))) return
+        if ( str === '∼' ) {
+            if ( expression.slice(-1) === '∼' ) return
+        } else {
+	    if (is_logical_operator(str) && is_logical_operator(expression.slice(-1))) return
+            if (is_logical_operator(str) && expression.slice(-1) === '') return
+	}
+        if (is_variable(str) && is_variable(expression.slice(-1))) return
 	if (str === '(' && is_variable(expression.slice(-1))) return
 	if (str === ')' && ( expression.replace(/[^\(]/g, '').length <= expression.replace(/[^\)]/g, '').length )) return
 	if (str === ')' && expression.slice(-1) === "(") return
