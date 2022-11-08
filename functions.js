@@ -241,7 +241,8 @@ function calcular_expressao(str, obj, string_result="") {
 	while (result.match(/\(([^\(\)]*)\)/g)) {
 		result = result.replaceAll(/\(([^\(\)]*)\)/g, (match, p) => { //Teste do Parenteses
 			response = calcular_expressao(p, obj, string_result)
-			string_result = `${string_result}${response[1]}`
+			// string_result = `${string_result}${response[1]}`
+			string_result = response[1]
 			return response[0]
 		})
 	}
@@ -280,7 +281,8 @@ function calcular_expressao(str, obj, string_result="") {
 		})
 	}
 
-	string_result = `${string_result}|${str}:${result}`	
+	
+	string_result = `${string_result}|${str}:${result}`
 	return [result, string_result]
 }
 
