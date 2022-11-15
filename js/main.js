@@ -1,11 +1,6 @@
-<<<<<<< HEAD:functions.js
-﻿const OPERATORS = ['∼','∧','⊻','∨','→','↔']
-var expression = ""
-=======
 const OPERATORS = ['∼','∧','⊻','∨','→','↔']
 var expression = ""
 var darkMode = true
->>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 
 // =================================================================================================
 
@@ -49,11 +44,7 @@ document.addEventListener('keydown', (event) => { // Escuta as teclas digitadas 
 				insert('[Falso]')
 				break
 			default:
-<<<<<<< HEAD:functions.js
-				console.log(`Tecla [key=${event.key},code=${event.code}] não configurada`)
-=======
 				// console.log(`Tecla [key=${event.key},code=${event.code}] não configurada`)
->>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 		}
 	}
 })
@@ -78,12 +69,8 @@ function insert(str) { // Insere o valor digitado na expressão
 }
 
 function update_expression() { // Atualiza a expressão
-<<<<<<< HEAD:functions.js
-	document.querySelector("#expressao").innerHTML = expression
-=======
 	document.querySelector("#display1").value = expression
 	// $('#display1').val(expression);
->>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 }
 
 function clear_screen() { // Limpa a expressão	
@@ -116,8 +103,6 @@ function calculate() { // Calcula o resultado
 	}
 }
 
-<<<<<<< HEAD:functions.js
-=======
 // ===== Dark Mode =================================================================================
 
 function switchMode() {
@@ -126,7 +111,6 @@ function switchMode() {
 	document.querySelector("#darkModeButton").innerHTML = darkMode ? "Modo claro" : "Modo escuro"
 }
 
->>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 // ===== Conversores ===============================================================================
 
 function ord(char){ // Retorna o valor da tabela ASCII
@@ -300,12 +284,6 @@ function build_answer_truth_table(obj, qtde_linhas) { // Constrói a tabela-verd
 
 	let table = document.createElement("table") // Cria uma nova tabela que exibirá os resultados
 	table.classList.add('table')
-<<<<<<< HEAD:functions.js
-	table.id = "tabela_resultado"
-	table.style = "margin-top: 2em;"
-
-	let thead = table.createTHead() // Cria o cabeçalho da tabela	
-=======
 	table.classList.add('table-striped')
 	if (document.querySelector("#darkMode").checked) {
 		table.classList.add('table-dark')
@@ -318,7 +296,6 @@ function build_answer_truth_table(obj, qtde_linhas) { // Constrói a tabela-verd
 	table.style = "margin-top: 2em;"
 
 	let thead = table.createTHead() // Cria o cabeçalho da tabela
->>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 
 	{ //Título da tabela
 		let row = thead.insertRow() // Cria a linha do cabeçalho do título
@@ -339,10 +316,7 @@ function build_answer_truth_table(obj, qtde_linhas) { // Constrói a tabela-verd
 	table.appendChild(thead)
 
 	let tbody = table.createTBody() // Cria o corpo da tabela-verdade
-<<<<<<< HEAD:functions.js
-=======
 	tbody.classList.add('table-group-divider')
->>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 
 	for (let i=0; i<qtde_linhas; i++) {
 		let row = tbody.insertRow()
@@ -378,9 +352,6 @@ function add_binary(a, b) {
 	return result
 }
 
-<<<<<<< HEAD:functions.js
-// clear_screen()
-=======
 // ===== Tema ======================================================================================
 
 // Valor padrão do display
@@ -457,4 +428,3 @@ $("#darkMode").change(function () {
 		$("#tabela_resultado").addClass("table-light");
 	}
 })
->>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
