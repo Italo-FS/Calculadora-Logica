@@ -349,7 +349,7 @@ function add_binary(a, b) {
 // ===== Tema ======================================================================================
 
 // Valor padrão do display
-$('#display1').val("");
+$('#display1').val("")
 
 const ELEMENTS = [
 	"#body",
@@ -364,13 +364,12 @@ const ELEMENTS = [
 	"#false",
 	"#equal",
 	"#clear",
-	"#backspace",
-	"#answer-table"
+	"#backspace"	
 ]
 
 // Aplica o tema padrão da calculadora (light) ao iniciar
 for (let element of ELEMENTS) {
-	$(`${element}`).addClass(`${element.substring(1)}-light`);
+	$(`${element}`).addClass(`${element.substring(1)}-light`)
 }
 
 // Efetua a troca do tema
@@ -378,7 +377,10 @@ $("#darkSwitch").change(function () {
 	let [A, B] = (this.checked) ? ['light', 'dark'] : ['dark', 'light']
 
 	for (let element of ELEMENTS) {
-		$(`${element}`).removeClass(`${element.substring(1)}-${A}`);
-		$(`${element}`).addClass(`${element.substring(1)}-${B}`);
+		$(`${element}`).removeClass(`${element.substring(1)}-${A}`)
+		$(`${element}`).addClass(`${element.substring(1)}-${B}`)
 	}
+
+	$("#answer-table").removeClass(`table-${A}`)
+	$("#answer-table").addClass(`table-${B}`)
 })
