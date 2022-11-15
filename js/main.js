@@ -1,5 +1,11 @@
+<<<<<<< HEAD:functions.js
 ﻿const OPERATORS = ['∼','∧','⊻','∨','→','↔']
 var expression = ""
+=======
+const OPERATORS = ['∼','∧','⊻','∨','→','↔']
+var expression = ""
+var darkMode = true
+>>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 
 // =================================================================================================
 
@@ -43,7 +49,11 @@ document.addEventListener('keydown', (event) => { // Escuta as teclas digitadas 
 				insert('[Falso]')
 				break
 			default:
+<<<<<<< HEAD:functions.js
 				console.log(`Tecla [key=${event.key},code=${event.code}] não configurada`)
+=======
+				// console.log(`Tecla [key=${event.key},code=${event.code}] não configurada`)
+>>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 		}
 	}
 })
@@ -68,7 +78,12 @@ function insert(str) { // Insere o valor digitado na expressão
 }
 
 function update_expression() { // Atualiza a expressão
+<<<<<<< HEAD:functions.js
 	document.querySelector("#expressao").innerHTML = expression
+=======
+	document.querySelector("#display1").value = expression
+	// $('#display1').val(expression);
+>>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 }
 
 function clear_screen() { // Limpa a expressão	
@@ -101,6 +116,17 @@ function calculate() { // Calcula o resultado
 	}
 }
 
+<<<<<<< HEAD:functions.js
+=======
+// ===== Dark Mode =================================================================================
+
+function switchMode() {
+	darkMode = !darkMode
+	document.body.className = darkMode ? "dark-mode" : "light-mode"
+	document.querySelector("#darkModeButton").innerHTML = darkMode ? "Modo claro" : "Modo escuro"
+}
+
+>>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 // ===== Conversores ===============================================================================
 
 function ord(char){ // Retorna o valor da tabela ASCII
@@ -274,10 +300,25 @@ function build_answer_truth_table(obj, qtde_linhas) { // Constrói a tabela-verd
 
 	let table = document.createElement("table") // Cria uma nova tabela que exibirá os resultados
 	table.classList.add('table')
+<<<<<<< HEAD:functions.js
 	table.id = "tabela_resultado"
 	table.style = "margin-top: 2em;"
 
 	let thead = table.createTHead() // Cria o cabeçalho da tabela	
+=======
+	table.classList.add('table-striped')
+	if (document.querySelector("#darkMode").checked) {
+		table.classList.add('table-dark')
+	} else {
+		table.classList.add('table-light')
+	}
+
+
+	table.id = "tabela_resultado"
+	table.style = "margin-top: 2em;"
+
+	let thead = table.createTHead() // Cria o cabeçalho da tabela
+>>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 
 	{ //Título da tabela
 		let row = thead.insertRow() // Cria a linha do cabeçalho do título
@@ -298,6 +339,10 @@ function build_answer_truth_table(obj, qtde_linhas) { // Constrói a tabela-verd
 	table.appendChild(thead)
 
 	let tbody = table.createTBody() // Cria o corpo da tabela-verdade
+<<<<<<< HEAD:functions.js
+=======
+	tbody.classList.add('table-group-divider')
+>>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
 
 	for (let i=0; i<qtde_linhas; i++) {
 		let row = tbody.insertRow()
@@ -333,4 +378,83 @@ function add_binary(a, b) {
 	return result
 }
 
+<<<<<<< HEAD:functions.js
 // clear_screen()
+=======
+// ===== Tema ======================================================================================
+
+// Valor padrão do display
+$('#display1').val("");
+
+// Tema padrão da calculadora (light)
+$("#body").addClass("body-light");
+$(".calculator").addClass("calculator-light");
+$("form").addClass("form-light");
+$("form input").addClass("form-input-light");
+$(".operand-group").addClass("operand-group-light");
+$(".operator-group").addClass("operator-group-light");
+$("#true").addClass("true-light");
+$("#false").addClass("false-light");
+$("#equal").addClass("equal-light");
+$("#clear").addClass("clear-light");
+$("#backspace").addClass("backspace-light");
+$("#tabela_resultado").addClass("table-light");
+
+// Theme system
+$("#darkMode").change(function () {
+	// dark theme
+	if (this.checked) {
+        $("#body").removeClass("body-light");
+        $("#body").addClass("body-dark");
+		$(".calculator").removeClass("calculator-light");
+		$(".calculator").addClass("calculator-dark");
+		$("form").removeClass("form-light");
+		$("form").addClass("form-dark");
+		$("form input").removeClass("form-input-light");
+		$("form input").addClass("form-input-dark");
+		$(".operand-group").removeClass("operand-group-light");
+		$(".operand-group").addClass("operand-group-dark");
+		$(".operator-group").removeClass("operator-group-light");
+		$(".operator-group").addClass("operator-group-dark");
+		$("#true").removeClass("true-light");
+		$("#true").addClass("true-dark");
+		$("#false").removeClass("false-light");
+		$("#false").addClass("false-dark");
+		$("#equal").removeClass("equal-light");
+		$("#equal").addClass("equal-dark");
+		$("#clear").removeClass("clear-light");
+		$("#clear").addClass("clear-dark");
+		$("#backspace").removeClass("backspace-light");
+		$("#backspace").addClass("backspace-dark");
+        $("#tabela_resultado").removeClass("table-light");
+		$("#tabela_resultado").addClass("table-dark");
+	}
+	// light theme (padrão)
+	else {
+        $("#body").removeClass("body-dark");
+        $("#body").addClass("body-light");
+		$(".calculator").removeClass("calculator-dark");
+		$(".calculator").addClass("calculator-light");
+		$("form").removeClass("form-dark");
+		$("form").addClass("form-light");
+		$("form input").removeClass("form-input-dark");
+		$("form input").addClass("form-input-light");
+		$(".operand-group").removeClass("operand-group-dark");
+		$(".operand-group").addClass("operand-group-light");
+		$(".operator-group").removeClass("operator-group-dark");
+		$(".operator-group").addClass("operator-group-light");
+		$("#true").removeClass("true-dark");
+		$("#true").addClass("true-light");
+		$("#false").removeClass("false-dark");
+		$("#false").addClass("false-light");
+		$("#equal").removeClass("equal-dark");
+		$("#equal").addClass("equal-light");
+		$("#clear").removeClass("clear-dark");
+		$("#clear").addClass("clear-light");
+		$("#backspace").removeClass("backspace-dark");
+		$("#backspace").addClass("backspace-light");
+        $("#tabela_resultado").removeClass("table-dark");
+		$("#tabela_resultado").addClass("table-light");
+	}
+})
+>>>>>>> c0ff9454b3485b095ba4afa0346bbaf36f02d595:js/main.js
