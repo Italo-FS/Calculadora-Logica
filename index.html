@@ -90,8 +90,8 @@
 						<button type="button" class="operand-group" onclick="insert('B')">B</button>
 						<button type="button" class="operand-group" onclick="insert('C')">C</button>
 						<button type="button" class="operand-group" onclick="insert('D')">D</button>
-						<button id="clear" type="button" class="function-btn" onclick="clear_screen()">C</button>
-						<button id="backspace" type="button" class="function-btn" onclick="backspace()">⌫</button>
+						<button id="clear" type="button" class="function-btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Limpar" onclick="clear_screen()">C</button>
+						<button id="backspace" type="button" class="function-btn" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Apagar" onclick="backspace()">⌫</button>
 					</div>
 					<div class="d-flex justify-content-between button-row">
 						<button type="button" class="operand-group" onclick="insert('E')">E</button>
@@ -106,39 +106,39 @@
 						<button type="button" class="operand-group" onclick="insert('J')">J</button>
 						<button type="button" class="operand-group" onclick="insert('K')">K</button>
 						<button type="button" class="operand-group" onclick="insert('L')">L</button>
-						<button type="button" class="operator-group" onclick="insert('→')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Condicional (se... então)">→</button>
-						<button type="button" class="operator-group" onclick="insert('∧')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Conjunção (e)">∧</button>
+						<button type="button" class="operator-group" onclick="insert('→')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Condicional (se... então)">→</button>
+						<button type="button" class="operator-group" onclick="insert('∧')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Conjunção (e)">∧</button>
 					</div>
 					<div class="d-flex justify-content-between button-row">
 						<button type="button" class="operand-group" onclick="insert('M')">M</button>
 						<button type="button" class="operand-group" onclick="insert('N')">N</button>
 						<button type="button" class="operand-group" onclick="insert('O')">O</button>
 						<button type="button" class="operand-group" onclick="insert('P')">P</button>
-						<button type="button" class="operator-group" onclick="insert('↔')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bicondicional (se e somente se)">↔</button>
-						<button type="button" class="operator-group" onclick="insert('∨')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Disjunção (ou)">∨</button>
+						<button type="button" class="operator-group" onclick="insert('↔')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Bicondicional (se e somente se)">↔</button>
+						<button type="button" class="operator-group" onclick="insert('∨')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Disjunção (ou)">∨</button>
 					</div>
 					<div class="d-flex justify-content-between button-row">
 						<button type="button" class="operand-group" onclick="insert('Q')">Q</button>
 						<button type="button" class="operand-group" onclick="insert('R')">R</button>
 						<button type="button" class="operand-group" onclick="insert('S')">S</button>
 						<button type="button" class="operand-group" onclick="insert('T')">T</button>
-						<button type="button" class="operator-group" onclick="insert('∼')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Negação">∼</button>
-						<button type="button" class="operator-group" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Disjunção exclusiva (ou... ou...)">⊻</button>
+						<button type="button" class="operator-group" onclick="insert('∼')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Negação">∼</button>
+						<button type="button" class="operator-group" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Disjunção exclusiva (ou... ou...)">⊻</button>
 					</div>
 					<div class="d-flex justify-content-between button-row">
 						<button type="button" class="operand-group" onclick="insert('U')">U</button>
 						<button type="button" class="operand-group" onclick="insert('V')">V</button>
 						<button type="button" class="operand-group" onclick="insert('W')">W</button>
 						<button type="button" class="operand-group" onclick="insert('X')">X</button>
-						<button id="true" type="button" onclick="insert('[Verdadeiro]')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Verdadeiro">V</button>
-						<button id="equal" type="button" onclick="calculate()">=</button>
+						<button id="true" type="button" onclick="insert('[Verdadeiro]')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Verdadeiro">V</button>
+						<button id="equal" type="button" onclick="calculate()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Calcular resultado">=</button>
 					</div>
 					<div class="d-flex justify-content-between button-row">
 						<button type="button" class="ghost-group"></button>
 						<button type="button" class="operand-group" onclick="insert('Y')">Y</button>
 						<button type="button" class="operand-group" onclick="insert('Z')">Z</button>
 						<button type="button" class="ghost-group"></button>
-						<button id="false" type="button" onclick="insert('[Falso]')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Falso">F</button>
+						<button id="false" type="button" onclick="insert('[Falso]')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-delay='{"show":500,"hide":100}' data-bs-title="Falso">F</button>
 						<button type="button" class="ghost-group"></button>
 					</div>
 				</div>
