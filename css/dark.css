@@ -1,0 +1,232 @@
+/* Dark Theme */
+.body-dark { 
+    background-color:#212529;
+}
+
+.navbar-dark {
+	background-color: #2C3034;
+}
+
+.labelDarkSwitch-dark{
+	color: #eceff1;
+}
+
+.calculator-dark {
+	background-color: #37474f;
+	border: 1px solid #37474f;
+    border-radius: 5px;	
+    transition: all 0.1s;
+	box-shadow: 
+	1px 1px 1px #647177,
+	1px 3px 1px #647177,
+	2px 5px 1px #647177,
+	2px 7px 1px #647177,
+	1px 18px 6px rgba(16,16,16,0.4),
+    1px 22px 10px rgba(16,16,16,0.2);
+}
+
+.form-dark {
+	background-color: #263238;
+	box-shadow: 0 0 0 0.1rem rgba(69, 90, 100, .5);
+}
+
+.form-input-dark {
+	color: #eceff1;
+}
+
+.operand-group-dark {
+	background-color: #607d8b;
+	border-color: #607d8b;
+	color: #ffffff;
+	box-shadow: 0px 5px 0px #495f69;
+}
+
+.operand-group-dark:hover {
+	background-color: #546e7a;
+	border-color: #455a64;
+	box-shadow: 0px 5px 0px #3f525a;
+}
+
+.operand-group-dark:active {
+	background-color: #455a64;
+	border-color: #455a64;
+	box-shadow: 0px 2px 0px #2a363c;
+	top: 3px;
+}
+
+.operator-group-dark {
+	background-color: #b0bec5;
+	border-color: #b0bec5;
+	color: #000000;
+	box-shadow: 0px 5px 0px #8a9ea8;
+}
+
+.operator-group-dark:hover {
+	background-color: #90a4ae;
+	border-color: #78909c;
+	box-shadow: 0px 5px 0px #6b8694;
+}
+
+.operator-group-dark:active {
+	background-color: #78909c;
+	border-color: #78909c;
+	box-shadow: 0px 2px 0px #576b75;
+	top: 3px;
+}
+
+.clear-dark {
+	background-color: #f44336;
+	border-color: #f44336;
+	color: #ffffff;
+	box-shadow: 0px 5px 0px #c2160a;
+}
+
+.clear-dark:hover {
+	background-color: #e53935;
+	border-color: #d32f2f;
+	box-shadow: 0px 5px 0px #b51a17;
+}
+
+.clear-dark:active {
+	background-color: #d32f2f;
+	border-color: #d32f2f;
+	box-shadow: 0px 2px 0px #931f1f;
+	top: 3px;
+}
+
+.backspace-dark {
+	background-color: #ff9800;
+	border-color: #ff9800;
+	color: #ffffff;
+	box-shadow: 0px 5px 0px #cc7a00;
+}
+
+.backspace-dark:hover {
+	background-color: #fb8c00;
+	border-color: #f57c00;
+	box-shadow: 0px 5px 0px #b36200;
+}
+
+.backspace-dark:active {
+	background-color: #f57c00;
+	border-color: #f57c00;
+	box-shadow: 0px 2px 0px #b35900;
+	top: 3px;
+}
+
+.true-dark {
+	background-color: #4caf50;
+	border-color: #4caf50;
+	color: #ffffff;
+	box-shadow: 0px 5px 0px #367c39;
+}
+
+.true-dark:hover {
+	background-color: #43a047;
+	border-color: #388e3c;
+	box-shadow: 0px 5px 0px #2d6c30;
+}
+
+.true-dark:active {
+	background-color: #388e3c;
+	border-color: #388e3c;
+	box-shadow: 0px 2px 0px #245b27;
+	top: 3px;
+}
+
+.false-dark {
+	background-color: #f44336;
+	border-color: #f44336;
+	color: #ffffff;
+	box-shadow: 0px 5px 0px #c2160a;
+}
+
+.false-dark:hover {
+	background-color: #e53935;
+	border-color: #d32f2f;
+	box-shadow: 0px 5px 0px #b51a17;
+}
+
+.false-dark:active {
+	background-color: #d32f2f;
+	border-color: #d32f2f;
+	box-shadow: 0px 2px 0px #931f1f;
+	top: 3px;
+}
+
+.equal-dark {
+	background-color: #4993c5;
+	border-color: #4993c5;
+	color: #ffffff;
+	box-shadow: 0px 5px 0px #367aa7;
+}
+
+.equal-dark:hover {
+	background-color: #3479a7;
+	border-color: #3479a7;
+	box-shadow: 0px 5px 0px #27648d;
+}
+
+.equal-dark:active {
+	background-color: #225d85;
+	border-color: #225d85;
+	box-shadow: 0px 2px 0px #17425f;
+	top: 3px;
+}
+
+/*----------------------------- Rounded switch ------------------------------*/
+
+.switch input {
+	display: none;
+}
+
+.switch {
+	position: relative;
+	width: 30px;
+	height: 17px;
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+.slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	cursor: pointer;
+	transition: .4s;
+	border-radius: 50px;
+	background-color: #263238;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 13px;
+	width: 13px;
+	left: 2px;
+	bottom: 2px;
+	transition: .4s;
+	border-radius: 50%;
+}
+
+input:checked + .slider:before {
+	background-color: #263238;
+}
+
+input:not(:checked) + .slider:before {
+	background-color: #eceff1;
+}
+
+input:checked + .slider {
+  background-color: #eceff1;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #eceff1;
+}
+
+input:checked + .slider:before {
+  transform: translateX(13px);
+}

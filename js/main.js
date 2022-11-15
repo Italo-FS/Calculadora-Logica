@@ -88,7 +88,7 @@ function clear_expression() {
 }
 
 function clear_result_table(){ // Limpa a tabela-verdade
-	document.querySelector("#resultado").innerHTML = ""
+	document.querySelector("#result").innerHTML = ""
 }
 
 function backspace() { // Apaga o último valor digitado
@@ -101,14 +101,6 @@ function calculate() { // Calcula o resultado
 		structure_answer()
 		clear_expression()
 	}
-}
-
-// ===== Dark Mode =================================================================================
-
-function switchMode() {
-	darkMode = !darkMode
-	document.body.className = darkMode ? "dark-mode" : "light-mode"
-	document.querySelector("#darkModeButton").innerHTML = darkMode ? "Modo claro" : "Modo escuro"
 }
 
 // ===== Conversores ===============================================================================
@@ -170,34 +162,34 @@ function structure_answer() { // Estrutura a resposta
 	let variaveis = sort_variables(expression)
 	let qtde_linhas_tabela = (2**variaveis.length)
 	let bin = "0".repeat(variaveis.length) // Cria uma string de com o valor 0 em binário
-	let array_tabela_resultado = {}
+	let array_answer_table = {}
 
 	for (let i = 0; i<qtde_linhas_tabela; i++) {
 		let valores = {}		
 		for (let j = 0; j<variaveis.length; j++) {
 			valores[variaveis[j]] = (bin[j] === '0') ? "1" : "0"
 
-			if (typeof array_tabela_resultado[variaveis[j]] === "undefined") {
-				array_tabela_resultado[variaveis[j]] = []
+			if (typeof array_answer_table[variaveis[j]] === "undefined") {
+				array_answer_table[variaveis[j]] = []
 			}
-			array_tabela_resultado[variaveis[j]].push((bin[j] === '0') ? "V" : "F") // Converte os valores da string do número binário, 0→V e 1→F para inverter os valores iniciais da tabela.
+			array_answer_table[variaveis[j]].push((bin[j] === '0') ? "V" : "F") // Converte os valores da string do número binário, 0→V e 1→F para inverter os valores iniciais da tabela.
 		}
 
 		resposta = calculate_expression(expression, valores)
 		for (let expressao of resposta[1].split('|')) {
 			let exp = expressao.split(':')
 			if (exp[0] != "" && !is_repeated_var(exp[0], variaveis)) {
-				if (typeof array_tabela_resultado[exp[0]] === "undefined") {
-					array_tabela_resultado[exp[0]] = []
+				if (typeof array_answer_table[exp[0]] === "undefined") {
+					array_answer_table[exp[0]] = []
 				}
-				array_tabela_resultado[exp[0]].push((exp[1]=== '1') ? "V" : "F")
+				array_answer_table[exp[0]].push((exp[1]=== '1') ? "V" : "F")
 			}
 
 		}
 		bin = add_binary(bin,"1") // Adiciona 1 ao valor binário
 	}
 
-	build_answer_truth_table(array_tabela_resultado, qtde_linhas_tabela)
+	build_answer_truth_table(array_answer_table, qtde_linhas_tabela)
 }
 
 function calculate_inner_expression(exp) {
@@ -280,19 +272,21 @@ function calculate_expression(exp, obj, string_result="") { // Calcula a express
 }
 
 function build_answer_truth_table(obj, qtde_linhas) { // Constrói a tabela-verdade
+	darkMode = document.querySelector("#darkSwitch").checked
+
 	clear_result_table() //Limpa os resultados anteriores
 
 	let table = document.createElement("table") // Cria uma nova tabela que exibirá os resultados
 	table.classList.add('table')
 	table.classList.add('table-striped')
-	if (document.querySelector("#darkMode").checked) {
+	if (darkMode) {
 		table.classList.add('table-dark')
 	} else {
 		table.classList.add('table-light')
 	}
 
 
-	table.id = "tabela_resultado"
+	table.id = "answer-table"
 	table.style = "margin-top: 2em;"
 
 	let thead = table.createTHead() // Cria o cabeçalho da tabela
@@ -329,7 +323,7 @@ function build_answer_truth_table(obj, qtde_linhas) { // Constrói a tabela-verd
 
 	table.appendChild(tbody)
 
-	document.querySelector("#resultado").appendChild(table)
+	document.querySelector("#result").appendChild(table)
 }
 
 function add_binary(a, b) {
@@ -357,74 +351,34 @@ function add_binary(a, b) {
 // Valor padrão do display
 $('#display1').val("");
 
-// Tema padrão da calculadora (light)
-$("#body").addClass("body-light");
-$(".calculator").addClass("calculator-light");
-$("form").addClass("form-light");
-$("form input").addClass("form-input-light");
-$(".operand-group").addClass("operand-group-light");
-$(".operator-group").addClass("operator-group-light");
-$("#true").addClass("true-light");
-$("#false").addClass("false-light");
-$("#equal").addClass("equal-light");
-$("#clear").addClass("clear-light");
-$("#backspace").addClass("backspace-light");
-$("#tabela_resultado").addClass("table-light");
+const ELEMENTS = [
+	"#body",
+	".navbar",
+	"#labelDarkSwitch",
+	".calculator",
+	"form",
+	"form input",
+	".operand-group",
+	".operator-group",
+	"#true",
+	"#false",
+	"#equal",
+	"#clear",
+	"#backspace",
+	"#answer-table"
+]
 
-// Theme system
-$("#darkMode").change(function () {
-	// dark theme
-	if (this.checked) {
-        $("#body").removeClass("body-light");
-        $("#body").addClass("body-dark");
-		$(".calculator").removeClass("calculator-light");
-		$(".calculator").addClass("calculator-dark");
-		$("form").removeClass("form-light");
-		$("form").addClass("form-dark");
-		$("form input").removeClass("form-input-light");
-		$("form input").addClass("form-input-dark");
-		$(".operand-group").removeClass("operand-group-light");
-		$(".operand-group").addClass("operand-group-dark");
-		$(".operator-group").removeClass("operator-group-light");
-		$(".operator-group").addClass("operator-group-dark");
-		$("#true").removeClass("true-light");
-		$("#true").addClass("true-dark");
-		$("#false").removeClass("false-light");
-		$("#false").addClass("false-dark");
-		$("#equal").removeClass("equal-light");
-		$("#equal").addClass("equal-dark");
-		$("#clear").removeClass("clear-light");
-		$("#clear").addClass("clear-dark");
-		$("#backspace").removeClass("backspace-light");
-		$("#backspace").addClass("backspace-dark");
-        $("#tabela_resultado").removeClass("table-light");
-		$("#tabela_resultado").addClass("table-dark");
-	}
-	// light theme (padrão)
-	else {
-        $("#body").removeClass("body-dark");
-        $("#body").addClass("body-light");
-		$(".calculator").removeClass("calculator-dark");
-		$(".calculator").addClass("calculator-light");
-		$("form").removeClass("form-dark");
-		$("form").addClass("form-light");
-		$("form input").removeClass("form-input-dark");
-		$("form input").addClass("form-input-light");
-		$(".operand-group").removeClass("operand-group-dark");
-		$(".operand-group").addClass("operand-group-light");
-		$(".operator-group").removeClass("operator-group-dark");
-		$(".operator-group").addClass("operator-group-light");
-		$("#true").removeClass("true-dark");
-		$("#true").addClass("true-light");
-		$("#false").removeClass("false-dark");
-		$("#false").addClass("false-light");
-		$("#equal").removeClass("equal-dark");
-		$("#equal").addClass("equal-light");
-		$("#clear").removeClass("clear-dark");
-		$("#clear").addClass("clear-light");
-		$("#backspace").removeClass("backspace-dark");
-		$("#backspace").addClass("backspace-light");
-        $("#tabela_resultado").removeClass("table-dark");
-		$("#tabela_resultado").addClass("table-light");
+// Aplica o tema padrão da calculadora (light) ao iniciar
+for (let element of ELEMENTS) {
+	$(`${element}`).addClass(`${element.substring(1)}-light`);
+}
+
+// Efetua a troca do tema
+$("#darkSwitch").change(function () {
+	let [A, B] = (this.checked) ? ['light', 'dark'] : ['dark', 'light']
+
+	for (let element of ELEMENTS) {
+		$(`${element}`).removeClass(`${element.substring(1)}-${A}`);
+		$(`${element}`).addClass(`${element.substring(1)}-${B}`);
 	}
 })
