@@ -367,14 +367,8 @@ const ELEMENTS = [
 	"#backspace"	
 ]
 
-// Aplica o tema padrão da calculadora (light) ao iniciar
-for (let element of ELEMENTS) {
-	$(`${element}`).addClass(`${element.substring(1)}-light`)
-}
-
-// Efetua a troca do tema
-$("#darkSwitch").change(function () {
-	let [A, B] = (this.checked) ? ['light', 'dark'] : ['dark', 'light']
+function changeMode(mode="") {
+	let [A, B] = ((this.checked) || (mode === "dark")) ? ['light', 'dark'] : ['dark', 'light']
 
 	for (let element of ELEMENTS) {
 		$(`${element}`).removeClass(`${element.substring(1)}-${A}`)
@@ -383,4 +377,17 @@ $("#darkSwitch").change(function () {
 
 	$("#answer-table").removeClass(`table-${A}`)
 	$("#answer-table").addClass(`table-${B}`)
-})
+
+	localStorage.setItem("dark-mode", B)
+	document.querySelector("#darkSwitch").checked = ( B === "dark" )
+}
+
+if (localStorage.getItem("dark-mode") === null) {
+	changeMode("light")
+} 
+else {
+	changeMode(localStorage.getItem("dark-mode"))
+}
+
+// Efetua a troca do tema
+$("#darkSwitch").change(changeMode)
