@@ -58,7 +58,7 @@ function insert(str) { // Insere o valor digitado na expressão
 		if (is_logical_operator(str) && is_logical_operator(expression.slice(-1))) return
 		if (is_logical_operator(str) && expression.slice(-1) === '') return
 	}
-	if (is_variable(str) && is_variable(expression.slice(-1))) return
+	if ((is_variable(str) || str==='[Verdadeiro]' || str==='[Falso]') && (is_variable(expression.slice(-1)) || expression.match(/\[(?:Verdadeiro|Falso)\]$/))) return
 	if (str === '(' && is_variable(expression.slice(-1))) return
 	if (str === ')' && ( expression.replace(/[^\(]/g, '').length <= expression.replace(/[^\)]/g, '').length )) return
 	if (str === ')' && expression.slice(-1) === "(") return
@@ -202,6 +202,12 @@ function calculate_inner_expression(exp) {
 	while (exp.match(/(0|1)∧(0|1)/g)) {
 		exp = exp.replaceAll(/(0|1)∧(0|1)/g, (match, p, q) => { //Teste do 'p E q'
 			return (p==='1' && q==='1') ? '1' : '0'
+		})	
+	}
+
+	while (exp.match(/(0|1)⊻(0|1)/g)) {
+		exp = exp.replaceAll(/(0|1)⊻(0|1)/g, (match, p, q) => { //Teste do 'OU p OU q'
+			return ((p==='0' && q==='1') || (p==='1' && q==='0')) ? '1' : '0'
 		})	
 	}
 
