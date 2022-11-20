@@ -134,6 +134,17 @@ function is_variable(str) { // Checa se é uma variável
 	return false
 }
 
+function is_tautology() { //Checa se a ultima coluna da tabela-resposta é uma tautologia
+	table = document.querySelector("#answer-table")
+	for (let r of table.rows) {
+		lastCell = r.cells[r.cells.length - 1]
+		if (lastCell.nodeName=== "TD") {
+			if (lastCell.innerHTML === 'F') return false
+		}	
+	}
+	return true
+}
+
 // ===== Cálculos ==================================================================================
 
 function correct_expression(texto) { // Corrige a expressão
@@ -190,6 +201,8 @@ function structure_answer() { // Estrutura a resposta
 	}
 
 	build_answer_truth_table(array_answer_table, qtde_linhas_tabela)
+	
+	document.getElementById("tautology").innerHTML = `${expression} ${is_tautology() ? "é" : "não é"} uma tautologia`
 }
 
 function calculate_inner_expression(exp) {
@@ -370,7 +383,8 @@ const ELEMENTS = [
 	"#false",
 	"#equal",
 	"#clear",
-	"#backspace"	
+	"#backspace",
+	"#tautology"
 ]
 
 function changeMode(mode="") {
