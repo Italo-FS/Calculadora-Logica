@@ -226,6 +226,8 @@ function structure_answer() { // Estrutura a resposta
 		${is_contradiction(expression_result_array) ? "contradição" : ""}
 		${is_contigency(expression_result_array) ? "contigência" : ""}
 	`
+
+	window.location.href = "#table-test"
 }
 
 function expression_to_array() {
