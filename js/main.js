@@ -134,15 +134,32 @@ function is_variable(str) { // Checa se é uma variável
 	return false
 }
 
-function is_tautology() { //Checa se a ultima coluna da tabela-resposta é uma tautologia
-	table = document.querySelector("#answer-table")
-	for (let r of table.rows) {
-		lastCell = r.cells[r.cells.length - 1]
-		if (lastCell.nodeName=== "TD") {
-			if (lastCell.innerHTML === 'F') return false
-		}	
+function is_tautology(array) { //Checa se a ultima coluna da tabela-resposta é uma tautologia
+	for (let element of array) {
+		if (element === 'F') return false
 	}
 	return true
+}
+
+function is_contradiction(array) { //Checa se a ultima coluna da tabela-resposta é uma contradição
+	for (let element of array) {
+		if (element === 'V') return false
+	}
+	return true
+}
+
+function is_contigency(array) { //Checa se a ultima coluna da tabela-resposta é uma contigência
+	let v_count = 0
+	let f_count = 0
+
+	for (let element of array) {
+		if (element === 'V') 
+			v_count++
+		if (element === 'F') 
+			f_count++
+		if (v_count > 0 && f_count > 0) return true
+	}
+	return false
 }
 
 // ===== Cálculos ==================================================================================
@@ -201,8 +218,27 @@ function structure_answer() { // Estrutura a resposta
 	}
 
 	build_answer_truth_table(array_answer_table, qtde_linhas_tabela)
-	
-	document.getElementById("tautology").innerHTML = `${expression} ${is_tautology() ? "é" : "não é"} uma tautologia`
+
+	expression_result_array = expression_to_array()
+
+	document.getElementById("table-test").innerHTML = `${expression} é uma 
+		${is_tautology(expression_result_array) ? "tautologia" : ""}
+		${is_contradiction(expression_result_array) ? "contradição" : ""}
+		${is_contigency(expression_result_array) ? "contigência" : ""}
+	`
+}
+
+function expression_to_array() {
+	table = document.querySelector("#answer-table")
+	array = []
+	for (let r of table.rows) {
+		lastCell = r.cells[r.cells.length - 1]
+		if (lastCell.nodeName=== "TD") {
+			// if (lastCell.innerHTML === 'F') return false
+			array.push(lastCell.innerHTML)
+		}	
+	}
+	return array
 }
 
 function calculate_inner_expression(exp) {
@@ -285,8 +321,6 @@ function calculate_expression(exp, obj, string_result="") { // Calcula a express
 		string_result = `${string_result}|${raw_inner_exp}:${exp_dicio[inner_exp]['value']}`
 	}
 
-	// console.log(exp_dicio)
-	// console.log(string_result)
 	return [result, string_result]
 }
 
@@ -371,7 +405,7 @@ function add_binary(a, b) {
 $('#display1').val("")
 
 const ELEMENTS = [
-	"#body",
+	" body",
 	".navbar",
 	"#labelDarkSwitch",
 	".calculator",
@@ -384,7 +418,9 @@ const ELEMENTS = [
 	"#equal",
 	"#clear",
 	"#backspace",
-	"#tautology"
+	"#table-test",
+	" p",
+	" hr"
 ]
 
 function changeMode(mode="") {

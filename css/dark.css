@@ -7,12 +7,20 @@
 	background-color: #2C3034;
 }
 
-.tautology-dark {
+.table-test-dark {
 	color: #eceff1;
 }
 
 .labelDarkSwitch-dark{
 	color: #eceff1;
+}
+
+.p-dark {
+	color: #eceff1;
+}
+
+.hr-dark {
+	background-image: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.9),rgba(255,255,255,0));
 }
 
 .calculator-dark {

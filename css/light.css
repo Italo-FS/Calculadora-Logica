@@ -7,12 +7,20 @@
 	background-color: #ECEDEE;
 }
 
-.tautology-light {
+.table-test-light {
 	color: #263238;
 }
 
 .labelDarkSwitch-light{
 	color: #263238;
+}
+
+.p-light {
+	color: #263238;
+}
+
+.hr-light {
+	background-image: linear-gradient(to right,rgba(0,0,0,0),rgba(0,0,0,.9),rgba(0,0,0,0));
 }
 
 .calculator-light {

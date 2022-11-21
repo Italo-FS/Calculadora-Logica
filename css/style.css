@@ -76,8 +76,30 @@ td, th {
 	font-family: 'Roboto', sans-serif;
 }
 
-#tautology {
+#table-test {
 	font-family: 'Roboto', sans-serif;
 	text-align: center;
 	margin-top: 1.5em;
+}
+
+#content {
+	position: relative;
+	text-align: center;
+	font-family: 'Open Sans',Arial,sans-serif;
+}
+
+p {
+	text-align: justify;
+	margin: 0 0 15px 0;
+	display: block;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+}
+
+hr {
+    clear: both;
+    border: 0;
+    height: 1px;
 }
