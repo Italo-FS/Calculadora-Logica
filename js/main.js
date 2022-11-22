@@ -87,7 +87,7 @@ function clear_expression() {
 	update_expression()
 }
 
-function clear_result_table(){ // Limpa a tabela-verdade
+function clear_result(){ // Limpa o resultado
 	document.getElementById("result").innerHTML = ""
 	document.getElementById("table-test").innerHTML = ""
 }
