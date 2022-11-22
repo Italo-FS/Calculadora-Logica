@@ -78,7 +78,7 @@ function clear_screen() { // Limpa a expressão
 		clear_expression()
 	}
 	else {
-		clear_result_table()
+		clear_result()
 	}
 }
 
@@ -88,7 +88,8 @@ function clear_expression() {
 }
 
 function clear_result_table(){ // Limpa a tabela-verdade
-	document.querySelector("#result").innerHTML = ""
+	document.getElementById("result").innerHTML = ""
+	document.getElementById("table-test").innerHTML = ""
 }
 
 function backspace() { // Apaga o último valor digitado
