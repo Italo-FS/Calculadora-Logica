@@ -330,7 +330,7 @@ function calculate_expression(exp, obj, string_result="") { // Calcula a express
 function build_answer_truth_table(obj, qtde_linhas) { // Constrói a tabela-verdade
 	darkMode = document.querySelector("#darkSwitch").checked
 
-	clear_result_table() //Limpa os resultados anteriores
+	clear_result() //Limpa os resultados anteriores
 
 	let table = document.createElement("table") // Cria uma nova tabela que exibirá os resultados
 	table.classList.add('table')
